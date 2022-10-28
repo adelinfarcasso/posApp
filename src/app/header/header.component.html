@@ -1,0 +1,61 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer (click)="drawer.opened = !drawer.opened">
+    <mat-toolbar routerLink="" color="primary"
+      ><a mat-mini-fab routerLink=".">PoS</a></mat-toolbar
+    >
+    <mat-list class="sidenav-list">
+      <mat-list-item>
+        <button
+          mat-button
+          color="primary"
+          color="white"
+          style="padding: 10px"
+          routerLink=""
+        >
+          <mat-icon color="white">home</mat-icon>
+          Home
+        </button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button color="primary" color="white" style="padding: 10px">
+          <mat-icon color="white">list_alt</mat-icon>
+          My orders
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        mat-button
+        style="padding: 10px"
+        (click)="drawer.toggle()"
+        color="white"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <a mat-mini-fab routerLink=".">PoS</a>
+      <span class="spacer"></span>
+      <button
+        mat-button
+        color="primary"
+        color="white"
+        style="padding: 10px"
+        (click)="onSearchToggle()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+      <button
+        [routerLink]="['cart']"
+        mat-button
+        color="primary"
+        color="white"
+        style="padding: 10px"
+      >
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    </mat-toolbar>
+    <app-search-panel></app-search-panel>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,14 @@
+<mat-expansion-panel #search>
+  <mat-form-field class="search-field" appearance="fill">
+    <mat-label>Search</mat-label>
+    <input matInput type="text" [(ngModel)]="searchValue" />
+    <button
+      [disabled]="!searchValue"
+      matSuffix
+      mat-icon-button
+      (click)="searchValue = ''"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</mat-expansion-panel>

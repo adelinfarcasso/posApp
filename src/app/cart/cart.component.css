@@ -1,0 +1,15 @@
+.cart-table{
+  width: 100%;
+}
+
+.actions-btn-container{
+  display:flex;
+  justify-content: center;
+  gap:15px;
+}
+
+.img-td{
+  padding:0;
+  display:flex;
+  justify-content: center;
+}
