@@ -45,13 +45,8 @@ export class ProductService {
   ];
 
   getProducts(selectedCategories: any) {
-    let toReturn: any;
-
     if (selectedCategories === 'All') {
-      console.log(selectedCategories);
       return this.products.slice();
-    } else {
-      console.log('o intrat bine');
     }
 
     return this.products

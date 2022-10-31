@@ -7,26 +7,50 @@ height: 100%;
   display:flex;
   flex-direction:column;
   justify-content:start;
-  width:200px;
+  width:300px;
   gap:20px;
 }
 
-mat-list-item button{
-  /* margin:0 1rem; */
-  display: flex;
-  gap:10px;
-  flex:1;
+.sidenav-cart-list{
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 300px;
+  gap:20px;
+  height: 90vh;
 }
 
+.cart-sidenav-cart-btn{
+  width: 100%;
+  text-align: center;
+}
 
 .pointer{
   cursor:pointer;
 }
+
+.spacer-column{
+  flex: 1 1 auto;
+}
+
+.cart-sidenav-item{
+  display:grid;
+  grid-template-columns: 0.25fr 1fr;
+  width: 100%;
+  font-size: 12px;
+  margin-top:20px;
+}
+
+.cart-sidenav-img{
+  width:50px;
+  height: auto;
+  grid-row:1 / 3;
+  align-self:flex-start;
+}
+
+
 .spacer {
   flex: 1 1 auto;
 }
 
-.hidden{
-display:none;
-}
 

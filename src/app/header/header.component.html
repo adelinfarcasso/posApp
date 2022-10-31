@@ -1,5 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer (click)="drawer.opened = !drawer.opened">
+  <mat-sidenav #drawer>
     <mat-toolbar routerLink="" color="primary"
       ><a mat-mini-fab routerLink=".">PoS</a></mat-toolbar
     >
@@ -24,6 +24,44 @@
       </mat-list-item>
     </mat-list>
   </mat-sidenav>
+
+  <!-- Cart sidenav -->
+
+  <mat-sidenav #cart position="end" (mouseleave)="cart.close()">
+    <mat-toolbar routerLink="" color="primary"
+      ><a mat-mini-fab routerLink=".">PoS</a></mat-toolbar
+    >
+    <mat-list class="sidenav-cart-list">
+      <mat-list-item class="" *ngFor="let i of cartItems">
+        <div class="cart-sidenav-item">
+          <img class="cart-sidenav-img" src="{{ i.product.imgSrc }}" alt="" />
+          <span class="cart-sidenav-name"
+            ><span style="font-weight: bold">{{ i.quantity }} x </span
+            >{{ i.product.name }}</span
+          >
+          <p class="cart-sidenav-price">Pret: {{ i.product.price }} RON</p>
+        </div>
+      </mat-list-item>
+      <mat-list-item *ngIf="!cartEmpty" class="spacer-column"></mat-list-item>
+      <mat-list-item *ngIf="!cartEmpty; else emptyCartMsg">
+        <button
+          class="cart-sidenav-cart-btn"
+          [routerLink]="['cart']"
+          mat-raised-button
+          color="primary"
+          style="padding: 10px"
+          (click)="cart.close()"
+        >
+          Go to Cart <mat-icon>shopping_cart</mat-icon>
+        </button>
+      </mat-list-item>
+      <ng-template #emptyCartMsg>
+        <mat-list-item>
+          <p>Cart is empty!</p>
+        </mat-list-item>
+      </ng-template>
+    </mat-list>
+  </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <button
@@ -46,13 +84,18 @@
         <mat-icon>search</mat-icon>
       </button>
       <button
-        [routerLink]="['cart']"
         mat-button
         color="primary"
         color="white"
         style="padding: 10px"
+        (mouseenter)="cart.open()"
       >
-        <mat-icon>shopping_cart</mat-icon>
+        <mat-icon
+          [matBadgeHidden]="cartEmpty"
+          [matBadge]="cartItemsNo"
+          matBadgeColor="warn"
+          >shopping_cart</mat-icon
+        >
       </button>
     </mat-toolbar>
     <app-search-panel></app-search-panel>

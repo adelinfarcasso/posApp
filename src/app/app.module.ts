@@ -29,6 +29,8 @@ import { ProductsComponent } from './products/products.component';
 import { SearchPanelComponent } from './header/search-panel/search-panel.component';
 import { CartComponent } from './cart/cart.component';
 import { CategoriesComponent } from './products/product-list/categories/categories.component';
+import { ProductPageComponent } from './product-page/product-page.component';
+import { MatBadgeModule } from '@angular/material/badge';
 
 const appRoutes = [
   {
@@ -40,6 +42,17 @@ const appRoutes = [
     path: 'cart',
     component: CartComponent,
     children: [],
+  },
+  {
+    path: 'product/:id',
+    component: ProductPageComponent,
+    children: [
+      // {
+      //   path: ':id',
+      //   component: ProductPageComponent,
+      //   children: [],
+      // },
+    ],
   },
 ];
 
@@ -55,6 +68,7 @@ const appRoutes = [
     SearchPanelComponent,
     CartComponent,
     CategoriesComponent,
+    ProductPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +88,7 @@ const appRoutes = [
     MatSelectModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatBadgeModule,
     RouterModule.forRoot(appRoutes),
   ],
   providers: [],

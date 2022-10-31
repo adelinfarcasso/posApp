@@ -1,0 +1,41 @@
+.container-fluid{
+ max-width: 1320px;
+ min-width:250px;
+}
+
+.product-picture > img{
+   max-width: 500px;
+}
+
+.product-details{
+  max-width: 500px;
+  height: 100%;
+}
+
+.add-to-cart-btn{
+  align-self: center;
+}
+
+.product-details-name{
+  font-size: 30px;
+}
+
+.product-details-price{
+  font-size: 16px;
+}
+
+.product-details-sku{
+  font-size: 12px;
+  font-weight: 300;
+  font-style:italic;
+}
+
+.spacer{
+  flex: 1 1 auto;
+}
+
+@media (max-width: 522px) {
+  .product-picture > img{
+    max-width: 100%;
+ }
+}
