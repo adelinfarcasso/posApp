@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { CategoriesService } from './categories/categories.service';
@@ -9,18 +10,23 @@ import { CategoriesService } from './categories/categories.service';
   styleUrls: ['./product-list.component.css'],
   providers: [],
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   selectedCategories = 'All';
+  subs = new Subscription();
 
   constructor(private pS: ProductService, private cS: CategoriesService) {}
 
   ngOnInit(): void {
     this.products = this.pS.getProducts('All');
-
-    this.cS.categoriesForm.valueChanges.subscribe((observer) => {
-      this.selectedCategories = observer;
-      this.products = this.pS.getProducts(this.selectedCategories);
-    });
+    this.subs.add(
+      this.cS.categoriesForm.valueChanges.subscribe((observer) => {
+        this.selectedCategories = observer;
+        this.products = this.pS.getProducts(this.selectedCategories);
+      })
+    );
+  }
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 }

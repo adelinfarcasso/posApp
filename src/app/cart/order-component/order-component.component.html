@@ -1,0 +1,180 @@
+<div class="form-container">
+  <div class="title">
+    <h1>Complete Order</h1>
+    <hr />
+  </div>
+  <div class="form">
+    <form (ngSubmit)="onSubmit()" [formGroup]="orderForm">
+      <h2>Personal details</h2>
+      <div formGroupName="clientData" class="form-group">
+        <mat-form-field appearance="fill">
+          <mat-label for="firstName">First Name</mat-label>
+          <input
+            matInput
+            placeholder="ex: John"
+            type="text"
+            id="firstName"
+            formControlName="firstName"
+          />
+          <mat-error
+            *ngIf="
+              orderForm.get('clientData.firstName').invalid &&
+              orderForm.get('clientData.firstName').touched
+            "
+            >Please fill First Name</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label for="lastName">Last Name</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="lastName"
+            id="lastName"
+            formControlName="lastName"
+          />
+          <mat-error
+            *ngIf="
+              orderForm.get('clientData.lastName').invalid &&
+              orderForm.get('clientData.lastName').touched
+            "
+            >Last Name cannot be empty!</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label for="cellphone">Cellphone</mat-label>
+          <input
+            type="text"
+            formControlName="cellphone"
+            id="cellphone"
+            matInput
+            placeholder="Ex: 0798765432"
+          />
+          <mat-error
+            *ngIf="
+              orderForm.get('clientData.cellphone').invalid ||
+              orderForm.get('clientData.cellphone').errors?.pattern
+            "
+          >
+            Please enter a valid Cellphone number!
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label for="email">Email</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="email"
+            id="email"
+            placeholder="name@example.com"
+          />
+          <mat-error
+            *ngIf="
+              orderForm.get('clientData.email').invalid &&
+              orderForm.get('clientData.email').touched
+            "
+            class="help-msg"
+          >
+            <mat-error
+              *ngIf="
+                orderForm.get('clientData.email').errors['email'];
+                else justEmpty
+              "
+            >
+              Please enter a valid email address.</mat-error
+            >
+          </mat-error>
+          <ng-template #justEmpty> Email cannot be empty! </ng-template>
+        </mat-form-field>
+      </div>
+      <h2>Shipping details</h2>
+      <hr />
+      <div formGroupName="shippingData" class="form-group">
+        <!-- TODO: -->
+        <div class="field-group">
+          <mat-form-field appearance="fill">
+            <mat-label for="address1">Address line 1</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="address1"
+              id="address1"
+            />
+            <mat-error
+              *ngIf="
+                orderForm.get('shippingData.address1').invalid &&
+                orderForm.get('shippingData.address1').touched
+              "
+              >Address line 1 cannot be empty!</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="field-group">
+          <mat-form-field appearance="fill">
+            <mat-label for="address2">Address line 2</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="address2"
+              id="address2"
+            />
+          </mat-form-field>
+        </div>
+        <div class="field-group">
+          <mat-form-field appearance="fill">
+            <mat-label for="city">City</mat-label>
+            <input matInput type="text" formControlName="city" id="city" />
+            <mat-error
+              *ngIf="
+                orderForm.get('shippingData.city').invalid &&
+                orderForm.get('shippingData.city').touched
+              "
+              >City cannot be empty!</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label for="region">Region</mat-label>
+            <input matInput type="text" formControlName="region" id="region" />
+            <mat-error
+              *ngIf="
+                orderForm.get('shippingData.region').invalid &&
+                orderForm.get('shippingData.region').touched
+              "
+              >Region cannot be empty!</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label for="country">Country</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="country"
+              id="country"
+            />
+            <mat-error
+              *ngIf="
+                orderForm.get('shippingData.country').invalid &&
+                orderForm.get('shippingData.country').touched
+              "
+              >Country cannot be empty!</mat-error
+            >
+          </mat-form-field>
+        </div>
+
+        <div class="place-order d-flex justify-content-end m-3">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!orderForm.valid"
+          >
+            Place order
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

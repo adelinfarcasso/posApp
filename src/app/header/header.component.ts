@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   cartSubscription: Subscription;
   activeCartLength: Subscription;
   cartItemsNo: number;
+  cartTotal: number;
 
   constructor(
     private headerService: HeaderService,
@@ -23,13 +24,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onSearchToggle() {
     this.headerService.toggleSearch.next();
   }
+
   ngOnInit(): void {
     this.cartSubscription = this.cartService.cartUpdated.subscribe((data) => {
       this.cartItems = data;
       this.cartEmpty = this.cartItems.length > 0 ? false : true;
+      // TODO: implement cart preview total
     });
     this.activeCartLength = this.cartService.cartLength.subscribe((data) => {
       this.cartItemsNo = data;
+    });
+
+    this.cartService.cartTotal.subscribe((data) => {
+      this.cartTotal = data;
     });
   }
 

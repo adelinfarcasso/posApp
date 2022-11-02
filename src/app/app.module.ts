@@ -31,6 +31,7 @@ import { CartComponent } from './cart/cart.component';
 import { CategoriesComponent } from './products/product-list/categories/categories.component';
 import { ProductPageComponent } from './product-page/product-page.component';
 import { MatBadgeModule } from '@angular/material/badge';
+import { OrderComponentComponent } from './cart/order-component/order-component.component';
 
 const appRoutes = [
   {
@@ -69,6 +70,7 @@ const appRoutes = [
     CartComponent,
     CategoriesComponent,
     ProductPageComponent,
+    OrderComponentComponent,
   ],
   imports: [
     BrowserModule,

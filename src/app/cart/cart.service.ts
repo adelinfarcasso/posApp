@@ -7,8 +7,10 @@ import { Product } from '../products/product.model';
 export class CartService {
   constructor(private productService: ProductService) {}
 
+  //TODO obj - export la o clasa
   cartActive: { product: Product; quantity: number }[] = [];
   cartActiveLength: number = 0;
+  cartTotalAmount: number = 0;
 
   addToCart(sku: string) {
     let product = this.productService.getProduct(sku)[0];
@@ -29,8 +31,10 @@ export class CartService {
         quantity: 1,
       });
     }
+
     this.cartUpdated.next(this.getActiveCart());
     this.cartLength.next(this.getCartLength());
+    this.cartTotal.next(this.getCartTotal());
   }
 
   getActiveCart() {
@@ -40,6 +44,8 @@ export class CartService {
   // cartUpdated = new EventEmitter<any>();
   cartUpdated = new Subject<{ product: Product; quantity: number }[]>();
   cartLength = new Subject<number>();
+  cartTotal = new Subject<number>();
+  cartQtyChange = new Subject<{ product: Product; quantity: number }[]>();
 
   deleteFromCart(sku: string) {
     this.cartActive = this.cartActive.filter((elem) => {
@@ -49,6 +55,7 @@ export class CartService {
     // this.cartUpdated.emit(this.cartActive.slice());
     this.cartUpdated.next(this.cartActive.slice());
     this.cartLength.next(this.getCartLength());
+    this.cartTotal.next(this.getCartTotal());
   }
 
   getCartLength() {
@@ -58,5 +65,28 @@ export class CartService {
     });
     this.cartActiveLength = acc;
     return this.cartActiveLength;
+  }
+
+  updateCartItemQty(sku: string, operator: string) {
+    this.cartActive.forEach((elem, idx) => {
+      if (elem.product.sku === sku) {
+        this.cartActive[idx].quantity += operator === 'add' ? +1 : -1;
+      }
+      if (this.cartActive[idx]?.quantity === 0) this.deleteFromCart(sku);
+    });
+
+    this.cartQtyChange.next(this.cartActive);
+    this.cartUpdated.next(this.cartActive.slice());
+    this.cartLength.next(this.getCartLength());
+    this.cartTotal.next(this.getCartTotal());
+  }
+
+  getCartTotal() {
+    let acc = 0;
+    this.cartActive.forEach((obj) => {
+      acc += obj.product.price * obj.quantity;
+    });
+    this.cartTotalAmount = acc;
+    return this.cartTotalAmount;
   }
 }

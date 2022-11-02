@@ -17,7 +17,6 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartService.deleteFromCart(sku);
   }
 
-  // Force to re-render
   drawActiveCart() {
     let holder = [];
     this.activeCart.forEach((elem) => {
@@ -34,12 +33,21 @@ export class CartComponent implements OnInit, OnDestroy {
     this.dataSource = holder;
   }
 
+  updateQty(sku: string, operator: string) {
+    this.cartService.updateCartItemQty(sku, operator);
+  }
+
   ngOnInit(): void {
     this.activeCart = this.cartService.getActiveCart();
     this.drawActiveCart();
     this.columnsToDisplay = ['imgSrc', 'name', 'price', 'qty', 'actions'];
 
     this.cartService.cartUpdated.subscribe((value) => {
+      this.activeCart = value;
+      this.drawActiveCart();
+    });
+
+    this.cartService.cartQtyChange.subscribe((value) => {
       this.activeCart = value;
       this.drawActiveCart();
     });

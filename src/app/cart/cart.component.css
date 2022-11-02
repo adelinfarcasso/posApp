@@ -1,15 +1,32 @@
-.cart-table{
+.native-container {
+  max-width: 1400px;
+  margin: auto;
+}
+
+.cart-table {
   width: 100%;
 }
 
-.actions-btn-container{
-  display:flex;
+.actions-btn-container {
+  display: flex;
   justify-content: center;
-  gap:15px;
+  gap: 15px;
 }
 
-.img-td{
-  padding:0;
-  display:flex;
+.img-td {
+  padding: 0;
+  display: flex;
   justify-content: center;
+}
+
+.qty-container {
+  text-align: center;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.empty-cart-msg {
+  display: flex;
+  justify-content: center;
+  flex: 1 1 auto;
 }
