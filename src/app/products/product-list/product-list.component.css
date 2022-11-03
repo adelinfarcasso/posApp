@@ -1,12 +1,18 @@
+.native-container {
+  max-width: 1400px;
+  margin: auto;
+}
+
 .container {
   display: grid;
 
-  max-width: 1800px;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   /* column-gap:1rem; */
   gap: 3rem;
-  margin: 1rem;
-  justify-content: center;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  justify-content: space-evenly;
 }
 
 /* TODO replace with minmax */

@@ -26,7 +26,7 @@
   </mat-sidenav>
 
   <!-- Cart sidenav -->
-  <mat-sidenav #cart position="end" (mouseleave)="cart.close()">
+  <mat-sidenav #cart position="end">
     <mat-toolbar routerLink="" color="primary"
       ><a mat-mini-fab routerLink=".">PoS</a>
       <h1 class="sidenav-header">Cart Summary</h1>
@@ -91,7 +91,7 @@
         color="primary"
         color="white"
         style="padding: 10px"
-        (mouseenter)="cart.open()"
+        (click)="cart.open()"
       >
         <mat-icon
           [matBadgeHidden]="cartEmpty"

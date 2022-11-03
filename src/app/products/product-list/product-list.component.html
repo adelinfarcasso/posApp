@@ -1,11 +1,13 @@
-<h1 style="margin: 1rem">Products</h1>
-<hr />
-<app-categories></app-categories>
+<div class="native-container">
+  <h1 style="margin: 1rem">Products</h1>
+  <hr />
+  <app-categories></app-categories>
 
-<div contentTemplate="contentTemplate" class="container d-grid">
-  <app-product-item
-    *ngFor="let p of products"
-    [product]="p"
-    class="product-card"
-  ></app-product-item>
+  <div contentTemplate="contentTemplate" class="container">
+    <app-product-item
+      *ngFor="let p of products"
+      [product]="p"
+      class="product-card"
+    ></app-product-item>
+  </div>
 </div>

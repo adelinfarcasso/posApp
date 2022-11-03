@@ -19,6 +19,8 @@ export class CartComponent implements OnInit, OnDestroy {
 
   drawActiveCart() {
     let holder = [];
+    console.log(this.activeCart);
+
     this.activeCart.forEach((elem) => {
       holder.push({
         imgSrc: elem.product.imgSrc,
@@ -35,6 +37,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
   updateQty(sku: string, operator: string) {
     this.cartService.updateCartItemQty(sku, operator);
+    console.log(this.activeCart);
   }
 
   ngOnInit(): void {

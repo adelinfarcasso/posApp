@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { LocalService } from './local.service';
 
 // matautocomplete
 @Component({
@@ -10,7 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class OrderComponentComponent implements OnInit {
   orderForm: FormGroup;
 
-  constructor() {}
+  constructor(private localService: LocalService) {}
 
   ngOnInit(): void {
     this.orderForm = new FormGroup({
@@ -32,6 +33,8 @@ export class OrderComponentComponent implements OnInit {
       }),
     });
   }
+
+  toLocal() {}
 
   getControl(control: string): FormControl<any> {
     return this.orderForm[`${control}`];

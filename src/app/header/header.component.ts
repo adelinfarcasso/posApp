@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HeaderService } from './header.service';
 import { CartService } from '../cart/cart.service';
 import { Subscription } from 'rxjs';
+import { LocalService } from '../cart/order-component/local.service';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private headerService: HeaderService,
-    private cartService: CartService
+    private cartService: CartService,
+    private localService: LocalService
   ) {}
 
   onSearchToggle() {
@@ -38,6 +40,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.cartService.cartTotal.subscribe((data) => {
       this.cartTotal = data;
     });
+
+    this.localService.init();
   }
 
   ngOnDestroy() {
