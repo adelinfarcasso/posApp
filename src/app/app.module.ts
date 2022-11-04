@@ -18,12 +18,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 // Components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
-import { PaginationComponent } from './pagination/pagination.component';
+import { PaginationComponent } from './products/pagination/pagination.component';
 import { ProductItemComponent } from './products/product-item/product-item.component';
 import { ProductsComponent } from './products/products.component';
 import { SearchPanelComponent } from './header/search-panel/search-panel.component';
@@ -94,6 +95,7 @@ const appRoutes = [
     ReactiveFormsModule,
     MatBadgeModule,
     MatSnackBarModule,
+    MatPaginatorModule,
     RouterModule.forRoot(appRoutes),
   ],
   providers: [],
