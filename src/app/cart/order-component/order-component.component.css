@@ -37,6 +37,18 @@
   gap: 0.5rem 1rem;
 }
 
+.place-order-btn {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+}
+
+.place-order-btn > button {
+  padding: 10px;
+  flex: 1;
+}
+
 @media (max-width: 768px) {
   .form-group-city,
   .form-group-address {

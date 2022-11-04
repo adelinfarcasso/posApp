@@ -4,6 +4,9 @@
   <ng-template #emptyCartMsg>
     <div class="empty-cart-msg">
       <h3>Shopping cart is empty!</h3>
+      <button mat-raised-button color="primary" routerLink="">
+        Go shopping
+      </button>
     </div>
   </ng-template>
   <div class="container-fluid" *ngIf="activeCart.length > 0; else emptyCartMsg">
@@ -53,7 +56,6 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="actions">
-        <!-- TODO: parse to localStorage - long -->
         <th mat-header-cell *matHeaderCellDef style="text-align: center">
           Actions
         </th>
@@ -72,6 +74,7 @@
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
       <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
     </table>
+    <div class="cart-total">Total: {{ cartTotal }} RON</div>
     <app-order-component></app-order-component>
   </div>
 </div>

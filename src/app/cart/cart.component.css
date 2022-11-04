@@ -27,10 +27,14 @@
 
 .empty-cart-msg {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   flex: 1 1 auto;
 }
 
-table {
-  margin-bottom: 2rem;
+.cart-total {
+  text-align: end;
+  font-weight: bold;
+  margin: 1rem 0;
 }

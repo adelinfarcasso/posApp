@@ -1,0 +1,63 @@
+<div class="native-container">
+  <h1 style="margin: 1rem">My Orders</h1>
+  <hr />
+  <div *ngIf="activeOrder; else noOrdersMsg" class="grid-container">
+    <mat-card class="order-select order-detail">
+      <p class="subtitle">Showing Order Id# {{ activeOrder.id }}</p>
+      <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+        All Orders
+      </button>
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          *ngFor="let o of clientOrders"
+          (click)="onOrderSelect(o['id'])"
+        >
+          {{ o["id"] }}
+        </button>
+      </mat-menu>
+      <p class="total"><strong> Total:</strong> {{ activeOrder.total }} RON</p>
+    </mat-card>
+
+    <mat-card class="order-summary order-detail">
+      <p class="subtitle">Order Summary</p>
+      <div class="product" *ngFor="let p of activeOrder.products">
+        <div class="product-detail">
+          {{ p["quantity"] }} x {{ p.product.name }} (sku: {{ p.product.sku }})
+        </div>
+        <div class="product-subtotal">
+          Subtotal: {{ p.quantity * p.product.price }} RON
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+    </mat-card>
+
+    <mat-card class="personal-data order-detail">
+      <p class="subtitle">Personal data</p>
+      <div>First Name: {{ activeOrder.shippingData.clientData.firstName }}</div>
+      <div>Last Name: {{ activeOrder.shippingData.clientData.lastName }}</div>
+      <div>Cellphone: {{ activeOrder.shippingData.clientData.cellphone }}</div>
+      <div>Email: {{ activeOrder.shippingData.clientData.email }}</div>
+    </mat-card>
+    <mat-card class="shipping-data order-detail">
+      <p class="subtitle">Shipping data</p>
+      <div>
+        Address line 1: {{ activeOrder.shippingData.shippingData.address1 }}
+      </div>
+      <div>
+        Address line 2: {{ activeOrder.shippingData.shippingData.address2 }}
+      </div>
+      <div>City: {{ activeOrder.shippingData.shippingData.city }}</div>
+      <div>Region: {{ activeOrder.shippingData.shippingData.region }}</div>
+      <div>Country: {{ activeOrder.shippingData.shippingData.country }}</div>
+    </mat-card>
+  </div>
+  <ng-template #noOrdersMsg>
+    <div class="no-orders-msg">
+      <h3>You have no submitted orders yet!</h3>
+      <button mat-raised-button color="primary" routerLink="">
+        Go shopping!
+      </button>
+    </div>
+  </ng-template>
+</div>

@@ -1,25 +1,38 @@
 // Responsabil strict de comunicarea cu localStorage
 
+import { Observable, Subject } from 'rxjs';
+import { Product } from 'src/app/products/product.model';
+
 export class LocalService {
   constructor() {}
 
-  init() {
-    // Initialization
-    // let activeCart = JSON.parse(localStorage.getItem('cart'));
-    // if (activeCart === null) {
-    //   this.cartService.cartActive = [];
-    //   return;
-    // }
-    // if (activeCart.length > 0) this.cartService.cartActive = activeCart;
-  }
+  ordersUpdate = new Subject<Object[]>();
+  orderSubmitted = new Subject<null>();
 
-  getLocalCart() {
-    return JSON.parse(localStorage.getItem('cart')) === null
+  getLocalCart(key: String) {
+    return JSON.parse(localStorage.getItem(`${key}`)) === null
       ? []
-      : JSON.parse(localStorage.getItem('cart'));
+      : JSON.parse(localStorage.getItem(`${key}`));
   }
 
-  setActiveCart(cart) {
-    localStorage.setItem('cart', JSON.stringify(cart));
+  setActiveCart(key: String, value: Object) {
+    localStorage.setItem(`${key}`, JSON.stringify(value));
+  }
+
+  setOrder(shippingData: Object) {
+    let orders = this.getLocalCart('orders');
+    let cart = this.getLocalCart('cart');
+    let total = this.getLocalCart('cartTotal');
+
+    orders.push({
+      products: cart,
+      total: total,
+      shippingData: shippingData,
+      id: Date.now(),
+    });
+
+    this.ordersUpdate.next(orders);
+
+    localStorage.setItem('orders', JSON.stringify(orders));
   }
 }

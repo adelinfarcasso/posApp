@@ -4,7 +4,7 @@
     <hr />
   </div>
   <div class="form">
-    <mat-form (ngSubmit)="onSubmit()" [formGroup]="orderForm">
+    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
       <h2>Personal details</h2>
       <div formGroupName="clientData" class="form-group">
         <mat-form-field appearance="outline">
@@ -163,20 +163,17 @@
           </mat-form-field>
         </div>
       </div>
-
-      <div class="place-order d-flex justify-content-end m-3">
+      <div class="place-order-btn">
         <button
+          [disabled]="!orderForm.valid"
+          type="submit"
           mat-raised-button
           color="primary"
-          type="submit"
-          [disabled]="!orderForm.valid"
         >
           Place order
         </button>
-        <button mat-raised-button color="primary" (click)="toLocal()">
-          To localStorage
-        </button>
+        <!-- <button mat-raised-button color="primary">To localStorage</button> -->
       </div>
-    </mat-form>
+    </form>
   </div>
 </div>

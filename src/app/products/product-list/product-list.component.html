@@ -3,11 +3,10 @@
   <hr />
   <app-categories></app-categories>
 
-  <div contentTemplate="contentTemplate" class="container">
+  <div contentTemplate="contentTemplate" class="products-container">
     <app-product-item
       *ngFor="let p of products"
       [product]="p"
-      class="product-card"
     ></app-product-item>
   </div>
 </div>

@@ -1,0 +1,46 @@
+.native-container {
+  max-width: 1400px;
+  margin: auto;
+}
+
+.subtitle {
+  font-weight: bold;
+}
+
+.order-detail {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.order-select {
+  justify-content: flex-start;
+}
+
+.total {
+  margin-top: auto;
+}
+
+.grid-container {
+  padding: 1rem;
+  width: 100%;
+  /* background-color: rgba(121, 26, 165, 0.274); */
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.personal-data > div,
+.shipping-data > div {
+  width: 100%;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.no-orders-msg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
+}

@@ -1,7 +1,11 @@
-<mat-card class="product-card gap-3">
-  <div [routerLink]="['/product', product.sku]" style="cursor: pointer">
+<mat-card class="product-card">
+  <div
+    [routerLink]="['/product', product.sku]"
+    style="cursor: pointer"
+    class="product-details"
+  >
     <img mat-card-image src="{{ product.imgSrc }}" class="product-card-img" />
-    <mat-card-title class="">{{ product.name }}</mat-card-title>
+    <mat-card-title class="product-name">{{ product.name }}</mat-card-title>
     <mat-card-content>
       <span class="align-self-center">Pret: {{ product.price }} RON</span>
     </mat-card-content>
@@ -10,6 +14,5 @@
     <button mat-raised-button color="primary" (click)="addToCart(product.sku)">
       Add to cart
     </button>
-    <button mat-button color="warn">Add to wishlist</button>
   </mat-card-actions>
 </mat-card>

@@ -11,13 +11,21 @@
           color="white"
           style="padding: 10px"
           routerLink=""
+          (click)="drawer.close()"
         >
           <mat-icon color="white">home</mat-icon>
           Home
         </button>
       </mat-list-item>
       <mat-list-item>
-        <button mat-button color="primary" color="white" style="padding: 10px">
+        <button
+          mat-button
+          color="primary"
+          color="white"
+          style="padding: 10px"
+          routerLink="my-orders"
+          (click)="drawer.close()"
+        >
           <mat-icon color="white">list_alt</mat-icon>
           My orders
         </button>

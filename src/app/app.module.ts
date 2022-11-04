@@ -32,6 +32,8 @@ import { CategoriesComponent } from './products/product-list/categories/categori
 import { ProductPageComponent } from './product-page/product-page.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { OrderComponentComponent } from './cart/order-component/order-component.component';
+import { ClientOrdersComponent } from './client-orders/client-orders.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const appRoutes = [
   {
@@ -47,13 +49,12 @@ const appRoutes = [
   {
     path: 'product/:id',
     component: ProductPageComponent,
-    children: [
-      // {
-      //   path: ':id',
-      //   component: ProductPageComponent,
-      //   children: [],
-      // },
-    ],
+    children: [],
+  },
+  {
+    path: 'my-orders',
+    component: ClientOrdersComponent,
+    children: [],
   },
 ];
 
@@ -71,6 +72,7 @@ const appRoutes = [
     CategoriesComponent,
     ProductPageComponent,
     OrderComponentComponent,
+    ClientOrdersComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,6 +93,7 @@ const appRoutes = [
     MatFormFieldModule,
     ReactiveFormsModule,
     MatBadgeModule,
+    MatSnackBarModule,
     RouterModule.forRoot(appRoutes),
   ],
   providers: [],

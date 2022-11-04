@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject } from 'rxjs';
 import { LocalService } from './local.service';
 
 // matautocomplete
@@ -11,7 +13,10 @@ import { LocalService } from './local.service';
 export class OrderComponentComponent implements OnInit {
   orderForm: FormGroup;
 
-  constructor(private localService: LocalService) {}
+  constructor(
+    private localService: LocalService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.orderForm = new FormGroup({
@@ -34,7 +39,12 @@ export class OrderComponentComponent implements OnInit {
     });
   }
 
-  toLocal() {}
+  openSnackBar(msg: string, action: string) {
+    let durationSec = 5;
+    this._snackBar.open(msg, action, {
+      duration: durationSec * 1000,
+    });
+  }
 
   getControl(control: string): FormControl<any> {
     return this.orderForm[`${control}`];
@@ -42,5 +52,11 @@ export class OrderComponentComponent implements OnInit {
 
   onSubmit() {
     console.log(this.orderForm);
+    this.localService.setOrder(this.orderForm.value);
+    this.orderForm.reset();
+    this.localService.setActiveCart('cart', []);
+    this.localService.setActiveCart('cartTotal', '');
+    this.localService.orderSubmitted.next();
+    this.openSnackBar('Order submitted, check out "My Orders"', 'Dismiss');
   }
 }

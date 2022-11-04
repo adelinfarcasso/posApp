@@ -12,23 +12,7 @@ export class CartService {
   ) {}
 
   //TODO obj - export la o clasa
-  // cartActive: { product: Product; quantity: number }[];
 
-  // [
-  //   {
-  //     product: {
-  //       name: 'iPhone 13 Pro 256 GB',
-  //       sku: 'P002',
-  //       imgSrc:
-  //         'https://istyle.ro/media/catalog/product/cache/image/e9c3970ab036de70892d86c6d221abfe/i/p/iphone_13_pro_max_sierra_blue_pdp_image_position-1a__wwen_9_3.jpg',
-  //       description:
-  //         'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum molestiae culpa cum illo quisquam nulla reprehenderit obcaecati repellendus dicta ipsa maxime at, labore, qui ab!',
-  //       price: 5000,
-  //       category: 'Smartphones',
-  //     },
-  //     quantity: 1,
-  //   },
-  // ];
   cartActiveLength: number = 0;
   cartTotalAmount: number = 0;
 
@@ -58,7 +42,7 @@ export class CartService {
         quantity: 1,
       });
     }
-    this.setActiveCart(activeCart);
+    this.setActiveCart('cart', activeCart);
 
     this.cartUpdated.next(activeCart);
     this.cartLength.next(this.getCartLength());
@@ -66,11 +50,11 @@ export class CartService {
   }
 
   getActiveCart() {
-    return this.localService.getLocalCart();
+    return this.localService.getLocalCart('cart');
   }
 
-  setActiveCart(cart) {
-    this.localService.setActiveCart(cart);
+  setActiveCart(key: String, value: Object) {
+    this.localService.setActiveCart(key, value);
   }
 
   deleteFromCart(sku: string) {
@@ -79,11 +63,16 @@ export class CartService {
       return elem.product.sku !== sku;
     });
 
-    this.setActiveCart(cartActive);
+    this.setActiveCart('cart', cartActive);
 
     this.cartUpdated.next(cartActive);
     this.cartLength.next(this.getCartLength());
     this.cartTotal.next(this.getCartTotal());
+  }
+
+  deleteCartAll() {
+    this.setActiveCart('cart', []);
+    this.emitter();
   }
 
   getCartLength() {
@@ -109,7 +98,8 @@ export class CartService {
       }
     });
 
-    this.setActiveCart(cartActive);
+    this.getCartTotal();
+    this.setActiveCart('cart', cartActive);
 
     this.cartQtyChange.next(cartActive);
     this.cartUpdated.next(cartActive);
@@ -124,8 +114,15 @@ export class CartService {
       acc += obj.product.price * obj.quantity;
     });
 
-    this.setActiveCart(cartActive);
+    this.setActiveCart('cartTotal', acc);
 
     return acc;
+  }
+
+  emitter() {
+    this.cartQtyChange.next(this.getActiveCart());
+    this.cartUpdated.next(this.getActiveCart());
+    this.cartLength.next(this.getCartLength());
+    this.cartTotal.next(this.getCartTotal());
   }
 }

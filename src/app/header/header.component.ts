@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HeaderService } from './header.service';
 import { CartService } from '../cart/cart.service';
 import { Subscription } from 'rxjs';
-import { LocalService } from '../cart/order-component/local.service';
 
 @Component({
   selector: 'app-header',
@@ -12,15 +11,13 @@ import { LocalService } from '../cart/order-component/local.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   cartItems = [];
   cartEmpty: boolean = true;
-  cartSubscription: Subscription;
-  activeCartLength: Subscription;
+  subs: Subscription[] = [];
   cartItemsNo: number;
   cartTotal: number;
 
   constructor(
     private headerService: HeaderService,
-    private cartService: CartService,
-    private localService: LocalService
+    private cartService: CartService
   ) {}
 
   onSearchToggle() {
@@ -28,24 +25,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cartSubscription = this.cartService.cartUpdated.subscribe((data) => {
-      this.cartItems = data;
-      this.cartEmpty = this.cartItems.length > 0 ? false : true;
-      // TODO: implement cart preview total
-    });
-    this.activeCartLength = this.cartService.cartLength.subscribe((data) => {
-      this.cartItemsNo = data;
-    });
+    this.subs.push(
+      this.cartService.cartUpdated.subscribe((data) => {
+        this.cartItems = data;
+        this.cartEmpty = this.cartItems.length > 0 ? false : true;
+      })
+    );
+    this.subs.push(
+      this.cartService.cartLength.subscribe((data) => {
+        this.cartItemsNo = data;
+      })
+    );
 
-    this.cartService.cartTotal.subscribe((data) => {
-      this.cartTotal = data;
-    });
+    this.subs.push(
+      this.cartService.cartTotal.subscribe((data) => {
+        this.cartTotal = data;
+      })
+    );
 
-    this.localService.init();
+    // To initialize from localStorage
+    this.cartService.emitter();
   }
 
   ngOnDestroy() {
-    // NOTE: daca las, la return din /cart -> err "unsubscribed"
-    // this.cartSubscription.unsubscribe();
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }

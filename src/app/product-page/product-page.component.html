@@ -1,26 +1,21 @@
-<div class="container-fluid p-5">
-  <div class="row g-5">
-    <div class="col-12 col-xl-6">
-      <div class="product-picture">
-        <img src="{{ product.imgSrc }}" alt="" class="img-fluid" />
-      </div>
-    </div>
-    <div class="col-12 col-xl-6">
-      <div class="product-details d-flex flex-column gap-3">
-        <h1 class="product-details-name">{{ product.name }}</h1>
-        <p class="product-details-price">Price: {{ product.price }} RON</p>
-        <p class="product-details-descripiton">{{ product.description }}</p>
-        <div class="spacer"></div>
-        <p class="product-details-sku">SKU: {{ product.sku }}</p>
-        <button
-          class="add-to-cart-btn p-2 px-4"
-          mat-raised-button
-          color="primary"
-          (click)="addToCart(product.sku)"
-        >
-          Add to cart <mat-icon>shopping_cart</mat-icon>
-        </button>
-      </div>
-    </div>
+<div class="native-container">
+  <div class="product-picture">
+    <img src="{{ product.imgSrc }}" alt="" class="img-fluid" />
+  </div>
+
+  <div class="product-details">
+    <h1 class="product-details-name">{{ product.name }}</h1>
+    <p class="product-details-price">Price: {{ product.price }} RON</p>
+    <p class="product-details-descripiton">{{ product.description }}</p>
+    <div class="spacer"></div>
+    <p class="product-details-sku">SKU: {{ product.sku }}</p>
+    <button
+      class="add-to-cart-btn"
+      mat-raised-button
+      color="primary"
+      (click)="addToCart(product.sku)"
+    >
+      Add to cart <mat-icon>shopping_cart</mat-icon>
+    </button>
   </div>
 </div>
