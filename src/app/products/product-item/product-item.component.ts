@@ -11,16 +11,10 @@ import { Product } from '../product.model';
 export class ProductItemComponent implements OnInit {
   item: Product | undefined;
   @Input() product: Product;
-  constructor(
-    private cartService: CartService,
-    private _snackBar: MatSnackBar
-  ) {}
+  constructor(private cartService: CartService) {}
 
   addToCart(sku: string) {
     this.cartService.addToCart(sku);
-    this._snackBar.open('Item added to cart!', 'Dismiss', {
-      duration: 5000,
-    });
   }
   ngOnInit(): void {}
 }

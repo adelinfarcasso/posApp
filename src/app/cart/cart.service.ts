@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Product } from '../products/product.model';
 import { LocalService } from './order-component/local.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
   constructor(
     private productService: ProductService,
-    private localService: LocalService
+    private localService: LocalService,
+    private _snackBar: MatSnackBar
   ) {}
 
   //TODO obj - export la o clasa
@@ -43,10 +45,9 @@ export class CartService {
       });
     }
     this.setActiveCart('cart', activeCart);
-
-    this.cartUpdated.next(activeCart);
-    this.cartLength.next(this.getCartLength());
-    this.cartTotal.next(this.getCartTotal());
+    // Open snackBar
+    this.snackBarOpen(`"${product.name}" added to cart!`);
+    this.emitter();
   }
 
   getActiveCart() {
@@ -59,15 +60,20 @@ export class CartService {
 
   deleteFromCart(sku: string) {
     let cartActive = this.getActiveCart();
-    cartActive = cartActive.filter((elem) => {
-      return elem.product.sku !== sku;
-    });
+    let product: Product;
+    cartActive = cartActive.filter(
+      (elem: { product: Product; quantity: Number }) => {
+        // if - For snackbar
+        if (elem.product.sku === sku) {
+          product = elem.product;
+        }
+        return elem.product.sku !== sku;
+      }
+    );
 
+    this.snackBarOpen(`"${product.name}" was deleted from cart!`);
     this.setActiveCart('cart', cartActive);
-
-    this.cartUpdated.next(cartActive);
-    this.cartLength.next(this.getCartLength());
-    this.cartTotal.next(this.getCartTotal());
+    this.emitter();
   }
 
   deleteCartAll() {
@@ -94,6 +100,9 @@ export class CartService {
       }
       if (cartActive[idx].quantity === 0) {
         deleted = true;
+        this.snackBarOpen(
+          `"${cartActive[idx].product.name}" was deleted from cart!`
+        );
         cartActive.splice(idx, 1);
       }
     });
@@ -117,6 +126,12 @@ export class CartService {
     this.setActiveCart('cartTotal', acc);
 
     return acc;
+  }
+
+  snackBarOpen(msg: string) {
+    this._snackBar.open(msg, 'Dismiss', {
+      duration: 5000,
+    });
   }
 
   emitter() {
