@@ -1,7 +1,12 @@
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { PaginationService } from './pagination/pagination.service';
 import { Product } from './product.model';
 
-//
+@Injectable({ providedIn: 'root' })
 export class ProductService {
+  constructor(private paginationService: PaginationService) {}
+
   private products: Product[] = [
     new Product(
       'iPhone 14 Pro 256 GB',
@@ -45,14 +50,37 @@ export class ProductService {
     ),
   ];
 
-  getProducts(selectedCategories: any) {
+  onUpdateProducts = new Subject<Product[]>();
+
+  getProducts(selectedCategories: string) {
     if (selectedCategories === 'All') {
       return this.products.slice();
     }
-
     return this.products
       .slice()
       .filter((product) => product.category.includes(selectedCategories));
+  }
+
+  emitPagesLengthCategory(selectedCategory: string) {
+    // returneaza Arr filtrat duupa categorie
+    const productsToDisplay = this.getProducts(selectedCategory);
+
+    // actualizeaza compPagesLength de fiecare data cand se schimba categoria
+    this.paginationService.pageLengthChange.next(productsToDisplay.length);
+
+    // paginationService.updatePagination, Obj.
+  }
+
+  getProductsPaginated(selectedCategory: string) {
+    let productsToDisplay = this.getProducts(selectedCategory);
+    productsToDisplay = productsToDisplay.slice(
+      ...this.paginationService.iterator()
+    );
+
+    console.log(this.paginationService.iterator());
+    console.log(productsToDisplay);
+
+    return productsToDisplay;
   }
 
   getProduct(sku: string) {
@@ -61,5 +89,9 @@ export class ProductService {
       return p.sku === sku;
     });
     return tolog;
+  }
+
+  getProductsLength(): number {
+    return this.products.length;
   }
 }

@@ -4,16 +4,22 @@ import { FormControl } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class CategoriesService {
-  constructor(private pS: ProductService) {}
+  constructor(private productService: ProductService) {}
 
-  categoriesForm = new FormControl('');
+  categoryForm = new FormControl('');
+  currentCategory: string = 'All';
 
   // Populate form
   getCategories(): Set<String> {
     let categories = [];
-    this.pS.getProducts('All').forEach((elem) => {
+    this.productService.getProducts('All').forEach((elem) => {
       categories.push(elem.category);
     });
     return new Set(categories);
+  }
+
+  emitCategory(category: string) {
+    this.productService.emitPagesLengthCategory(category);
+    this.currentCategory = category;
   }
 }

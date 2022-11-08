@@ -1,8 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
-
-import { ProductService } from '../../product.service';
 import { CategoriesService } from './categories.service';
 
 @Component({
@@ -12,16 +8,17 @@ import { CategoriesService } from './categories.service';
 })
 export class CategoriesComponent implements OnInit {
   categoriesList: Set<String>;
-  selectedCategories: String;
+  selectedCategory: String;
 
-  constructor(private pS: ProductService, private cS: CategoriesService) {}
+  constructor(private categoryService: CategoriesService) {}
 
-  categories = this.cS.categoriesForm;
+  categories = this.categoryService.categoryForm;
 
   ngOnInit(): void {
-    this.categories.valueChanges.subscribe((observer) => {
-      this.selectedCategories = observer;
+    this.categories.valueChanges.subscribe((value) => {
+      this.selectedCategory = value;
+      this.categoryService.emitCategory(value);
     });
-    this.categoriesList = this.cS.getCategories();
+    this.categoriesList = this.categoryService.getCategories();
   }
 }

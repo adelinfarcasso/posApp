@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { PaginationService } from '../pagination/pagination.service';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { CategoriesService } from './categories/categories.service';
@@ -12,18 +13,28 @@ import { CategoriesService } from './categories/categories.service';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
-  selectedCategories = 'All';
+  selectedCategory = 'All';
   subs = new Subscription();
 
-  constructor(private pS: ProductService, private cS: CategoriesService) {}
+  constructor(
+    private productService: ProductService,
+    private categoryService: CategoriesService
+  ) {}
 
   ngOnInit(): void {
-    this.products = this.pS.getProducts('All');
+    this.products = this.productService.getProducts('All');
+
     this.subs.add(
-      this.cS.categoriesForm.valueChanges.subscribe((observer) => {
-        this.selectedCategories = observer;
-        this.products = this.pS.getProducts(this.selectedCategories);
+      this.categoryService.categoryForm.valueChanges.subscribe((value) => {
+        this.selectedCategory = value;
+        this.products = this.productService.getProducts(value);
       })
+    );
+    // subscribe
+    this.subs.add(
+      this.productService.onUpdateProducts.subscribe(
+        (value) => (this.products = value)
+      )
     );
   }
   ngOnDestroy(): void {

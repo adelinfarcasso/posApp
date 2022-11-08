@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { CategoriesService } from '../product-list/categories/categories.service';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
+import { PaginationService } from './pagination.service';
 
 @Component({
   selector: 'app-pagination',
@@ -10,27 +12,34 @@ import { ProductService } from '../product.service';
 })
 export class PaginationComponent implements OnInit {
   @ViewChild('paginator', { static: true }) paginator: MatPaginator;
-  productsArr: Product[] = [];
-  pageIndex: number;
-  pageSize: number;
-  totalLength: number;
-  currentPage = 0;
+  compPageSize: number;
+  compPageIndex: number;
+  compPagesLength: number;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private paginationService: PaginationService,
+    private productService: ProductService,
+    private categoryService: CategoriesService
+  ) {}
 
   handlePage(e: PageEvent) {
-    this.pageIndex = e.pageIndex;
-    this.pageSize = e.pageSize;
-    this.totalLength = e.length;
+    this.paginationService.pageSize = e.pageSize; // subject TODO
+    this.paginationService.pageIndex = e.pageIndex;
+    //emit
+    this.productService.onUpdateProducts.next(
+      this.productService.getProductsPaginated(
+        this.categoryService.currentCategory
+      )
+    );
   }
 
-  iterator() {
-    const start = this.pageSize * this.currentPage;
-    const end = (this.currentPage + 1) * this.pageSize;
-  }
   ngOnInit(): void {
-    this.productsArr = this.productService.getProducts('all');
-    this.paginator.length = this.productsArr.length;
-    this.pageSize = this.paginator.pageSize;
+    this.compPageIndex = this.paginationService.pageIndex;
+    this.compPageSize = this.paginationService.pageSize;
+    this.compPagesLength = this.productService.getProductsLength();
+
+    this.paginationService.pageLengthChange.subscribe((data) => {
+      this.compPagesLength = data;
+    });
   }
 }
