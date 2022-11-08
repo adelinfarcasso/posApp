@@ -61,12 +61,15 @@ export class ProductService {
       .filter((product) => product.category.includes(selectedCategories));
   }
 
-  emitPagesLengthCategory(selectedCategory: string) {
+  emitOnCategoryChange(selectedCategory: string) {
     // returneaza Arr filtrat duupa categorie
     const productsToDisplay = this.getProducts(selectedCategory);
 
     // actualizeaza compPagesLength de fiecare data cand se schimba categoria
-    this.paginationService.pageLengthChange.next(productsToDisplay.length);
+    this.paginationService.pageChange.next({
+      pageIndex: 0,
+      totalLength: productsToDisplay.length,
+    });
 
     // paginationService.updatePagination, Obj.
   }

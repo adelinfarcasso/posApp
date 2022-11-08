@@ -12,9 +12,11 @@ import { PaginationService } from './pagination.service';
 })
 export class PaginationComponent implements OnInit {
   @ViewChild('paginator', { static: true }) paginator: MatPaginator;
-  compPageSize: number;
-  compPageIndex: number;
-  compPagesLength: number;
+  compPageDetails = {
+    compPageSize: 0,
+    compPageIndex: 0,
+    compPagesLength: 0,
+  };
 
   constructor(
     private paginationService: PaginationService,
@@ -23,8 +25,14 @@ export class PaginationComponent implements OnInit {
   ) {}
 
   handlePage(e: PageEvent) {
-    this.paginationService.pageSize = e.pageSize; // subject TODO
-    this.paginationService.pageIndex = e.pageIndex;
+    this.compPageDetails.compPageIndex = e.pageIndex =
+      this.paginationService.paginationDetails.pageIndex;
+    this.compPageDetails.compPageSize = e.pageSize =
+      this.paginationService.paginationDetails.pageSize;
+    this.paginationService.paginationDetails.totalLength =
+      this.compPageDetails.compPagesLength =
+        this.productService.getProductsLength();
+
     //emit
     this.productService.onUpdateProducts.next(
       this.productService.getProductsPaginated(
@@ -34,12 +42,17 @@ export class PaginationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.compPageIndex = this.paginationService.pageIndex;
-    this.compPageSize = this.paginationService.pageSize;
-    this.compPagesLength = this.productService.getProductsLength();
+    this.compPageDetails.compPagesLength =
+      this.productService.getProductsLength();
+    this.paginationService.pageChange.subscribe((data) => {
+      console.log(data);
 
-    this.paginationService.pageLengthChange.subscribe((data) => {
-      this.compPagesLength = data;
+      this.paginationService.paginationDetails.pageIndex =
+        this.compPageDetails.compPageIndex = data.pageIndex;
+      this.paginationService.paginationDetails.pageSize =
+        this.compPageDetails.compPageSize = data.pageSize;
+      this.paginationService.paginationDetails.totalLength =
+        this.compPageDetails.compPagesLength = data.totalLength;
     });
   }
 }

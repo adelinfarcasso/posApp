@@ -19,7 +19,7 @@ export class CategoriesService {
   }
 
   emitCategory(category: string) {
-    this.productService.emitPagesLengthCategory(category);
+    this.productService.emitOnCategoryChange(category);
     this.currentCategory = category;
   }
 }

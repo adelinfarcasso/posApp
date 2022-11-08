@@ -3,15 +3,23 @@ import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class PaginationService {
-  pageIndex: number = 0;
-  pageSize: number = 5;
-  totalLength: number;
+  paginationDetails = {
+    pageIndex: 0,
+    pageSize: 5,
+    totalLength: 0,
+  };
 
-  pageLengthChange = new Subject<number>();
+  pageChange = new Subject<{
+    pageIndex?: number;
+    pageSize?: number;
+    totalLength?: number;
+  }>();
 
   iterator() {
-    const start = this.pageSize * this.pageIndex;
-    const end = (this.pageIndex + 1) * this.pageSize;
+    const start =
+      this.paginationDetails.pageSize * this.paginationDetails.pageIndex;
+    const end =
+      (this.paginationDetails.pageIndex + 1) * this.paginationDetails.pageSize;
     return [start, end];
   }
 

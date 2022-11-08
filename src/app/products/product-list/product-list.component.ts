@@ -30,6 +30,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.products = this.productService.getProducts(value);
       })
     );
+
     // subscribe
     this.subs.add(
       this.productService.onUpdateProducts.subscribe(
