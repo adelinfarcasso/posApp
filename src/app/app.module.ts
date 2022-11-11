@@ -35,6 +35,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { OrderComponentComponent } from './cart/order-component/order-component.component';
 import { ClientOrdersComponent } from './client-orders/client-orders.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const appRoutes = [
   {
@@ -96,6 +97,7 @@ const appRoutes = [
     MatBadgeModule,
     MatSnackBarModule,
     MatPaginatorModule,
+    MatAutocompleteModule,
     RouterModule.forRoot(appRoutes),
   ],
   providers: [],

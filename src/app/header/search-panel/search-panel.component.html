@@ -1,14 +1,36 @@
 <mat-expansion-panel #search>
-  <mat-form-field class="search-field" appearance="fill">
-    <mat-label>Search</mat-label>
-    <input matInput type="text" [(ngModel)]="searchValue" />
-    <button
+  <form>
+    <mat-form-field class="search-field" appearance="fill">
+      <mat-label>Search product</mat-label>
+      <input
+        #input
+        matInput
+        type="text"
+        [formControl]="searchFormControl"
+        [matAutocomplete]="auto"
+        placeholder="ex.: iPhone"
+      />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option
+          *ngFor="let product of filteredOptions | async"
+          [value]="product"
+        >
+          <div
+            [routerLink]="['/product', product.sku]"
+            (click)="onSearchComplete()"
+          >
+            {{ product.name }}
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+      <!-- <button
       [disabled]="!searchValue"
       matSuffix
       mat-icon-button
       (click)="searchValue = ''"
     >
       <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
+    </button> -->
+    </mat-form-field>
+  </form>
 </mat-expansion-panel>

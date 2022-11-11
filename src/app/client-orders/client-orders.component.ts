@@ -39,15 +39,7 @@ export class ClientOrdersComponent implements OnInit {
   ngOnInit(): void {
     this.clientOrders = this.localService.getLocalCart('orders');
     this.activeOrder = this.clientOrders[this.clientOrders.length - 1];
-    // this.localService.ordersUpdate.subscribe((orders) => {
-    //   orders.forEach((order) => {
-    //     console.log(order);
-    //   });
-    //   this.activeOrder = orders[0];
-    // });
-    console.log(this.activeOrder);
 
-    // this.activeOrder = this.clientOrders[this.clientOrders.length - 1];
-    // console.log(this.activeOrder);
+    console.log(this.activeOrder);
   }
 }
