@@ -25,13 +25,14 @@ export class PaginationComponent implements OnInit {
   ) {}
 
   handlePage(e: PageEvent) {
-    this.compPageDetails.compPageIndex = e.pageIndex =
-      this.paginationService.paginationDetails.pageIndex;
-    this.compPageDetails.compPageSize = e.pageSize =
-      this.paginationService.paginationDetails.pageSize;
+    this.compPageDetails.compPageIndex =
+      this.paginationService.paginationDetails.pageIndex = e.pageIndex;
+    this.compPageDetails.compPageSize =
+      this.paginationService.paginationDetails.pageSize = e.pageSize;
     this.paginationService.paginationDetails.totalLength =
-      this.compPageDetails.compPagesLength =
-        this.productService.getProductsLength();
+      this.productService.getProductsLength();
+
+    console.log(e);
 
     //emit
     this.productService.onUpdateProducts.next(
@@ -44,15 +45,20 @@ export class PaginationComponent implements OnInit {
   ngOnInit(): void {
     this.compPageDetails.compPagesLength =
       this.productService.getProductsLength();
+
     this.paginationService.pageChange.subscribe((data) => {
-      console.log(data);
+      console.log(data, 'data');
 
       this.paginationService.paginationDetails.pageIndex =
         this.compPageDetails.compPageIndex = data.pageIndex;
       this.paginationService.paginationDetails.pageSize =
-        this.compPageDetails.compPageSize = data.pageSize;
+        this.compPageDetails.compPageSize = this.compPageDetails.compPageSize;
       this.paginationService.paginationDetails.totalLength =
         this.compPageDetails.compPagesLength = data.totalLength;
+
+      console.log(this.paginationService.paginationDetails.pageIndex);
+      console.log(this.paginationService.paginationDetails.pageSize);
+      console.log(this.paginationService.paginationDetails.totalLength);
     });
   }
 }

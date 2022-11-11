@@ -20,6 +20,8 @@ export class PaginationService {
       this.paginationDetails.pageSize * this.paginationDetails.pageIndex;
     const end =
       (this.paginationDetails.pageIndex + 1) * this.paginationDetails.pageSize;
+    console.log('Start:', start, 'End', end);
+
     return [start, end];
   }
 

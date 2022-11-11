@@ -64,24 +64,23 @@ export class ProductService {
   emitOnCategoryChange(selectedCategory: string) {
     // returneaza Arr filtrat duupa categorie
     const productsToDisplay = this.getProducts(selectedCategory);
+    console.log(productsToDisplay);
 
     // actualizeaza compPagesLength de fiecare data cand se schimba categoria
     this.paginationService.pageChange.next({
       pageIndex: 0,
       totalLength: productsToDisplay.length,
     });
-
     // paginationService.updatePagination, Obj.
   }
 
   getProductsPaginated(selectedCategory: string) {
     let productsToDisplay = this.getProducts(selectedCategory);
+    console.log('product.service', productsToDisplay);
+
     productsToDisplay = productsToDisplay.slice(
       ...this.paginationService.iterator()
     );
-
-    console.log(this.paginationService.iterator());
-    console.log(productsToDisplay);
 
     return productsToDisplay;
   }

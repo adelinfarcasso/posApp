@@ -15,10 +15,12 @@ export class CategoriesComponent implements OnInit {
   categories = this.categoryService.categoryForm;
 
   ngOnInit(): void {
+    this.categoriesList = this.categoryService.getCategories();
+
     this.categories.valueChanges.subscribe((value) => {
       this.selectedCategory = value;
       this.categoryService.emitCategory(value);
+      console.log('cat val chng');
     });
-    this.categoriesList = this.categoryService.getCategories();
   }
 }

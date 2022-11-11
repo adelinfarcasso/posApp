@@ -27,7 +27,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.subs.add(
       this.categoryService.categoryForm.valueChanges.subscribe((value) => {
         this.selectedCategory = value;
-        this.products = this.productService.getProducts(value);
+        this.products = this.productService.getProductsPaginated(value);
+        console.log(this.products);
       })
     );
 
