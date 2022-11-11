@@ -38,17 +38,18 @@ export class SearchPanelComponent implements OnInit {
     );
 
     this.headerService.toggleSearch.subscribe(() => {
-      this.searchElem.toggle();
-      this.isVisible = !this.isVisible;
-      console.log(this.isVisible);
+      this.toggleSearchBar();
     });
   }
 
-  // TODO: reset search field after click
-  onSearchComplete() {
+  toggleSearchBar(): void {
     this.searchElem.toggle();
     this.isVisible = !this.isVisible;
-    this.displayFn;
+  }
+
+  onSearchComplete() {
+    this.toggleSearchBar();
+    this.searchFormControl.setValue(' ');
   }
 
   displayFn(product: Product): string {
